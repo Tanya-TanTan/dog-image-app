@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/main.css">
+    <title>I Woof You</title>
+</head>
+<body>
+  <div class="header">
+  <h1>I Woof You </h1>
+  <img src="/images/logo1.png" alt="" class="logo1">
+  </div>
+  <div class="sub-header">
+  <h2>Choose from the options below to get a random image of a dog and fill your day with some cuteness overload!</h2>
+  </div>
+  <div class="container">
+    <div>
+      <form id="selectBreedForm" method="post" action="/select-breed">
+        <div class="select-container">
+            <div class="select-wrapper">
+                <label for="selectBreed">Choose your favourite breed</label>
+                <select name="selectBreed" id="breed">
+                    <% if (locals.dogBreed) { %>
+                        <% dogBreed.forEach(breed => { %>
+                            <option value="<%= breed %>"><%= breed %></option>
+                        <% }); %>
+                    <% } %>
+                </select>
+            </div>
+            <img src="/images/logo2.png" alt="" class="logo2">
+        </div>
+        <button class="btn" type="submit">Submit</button>
+    </form>
+
+
+    <form id="randomBreedForm" method="post" action="/random-breed">
+        <label for="randombreed" id="randombreed" name="randomBreed">Click below to get an image of a random breed</label>
+        <button class="btn" type="submit">Woof</button>
+    </form>
+</div>
+
+<!-- I have added an if else condition to change the default dog image on the webpage. 
+Here it changes it to the selectedBreed image where the reult is passed to the ejs template with the selectedBreed key.
+Below that it changes to the randomBreed image where the reult is passed to the ejs template with the randomBreed key. -->
+
+<div class="breed-container">
+  <% if (locals.nameOfBreed) { %>
+    <h2 class="breed-name"><%= nameOfBreed.toUpperCase() %></h2>
+    <% } %>
+  <% if (locals.selectedBreed) { %>
+    <img src="<%= locals.selectedBreed %>" alt="<%= locals.selectedBreed %>" height="400">
+  <% } 
+  else if (locals.randomBreed) { %>
+    <% if (locals.nameOfRandomBreed) { %>
+      <h2 class="breed-name"><%= nameOfRandomBreed.toUpperCase() %></h2>
+      <% } %>
+    <img src="<%= locals.randomBreed %>" alt="<%= locals.randomBreed %>" height="400">
+  <% } else { %>
+    <img class="dog-img" src="/images/iwymainpic.jpg" alt="dog"> 
+  <% } %>
+</div>
+    </div>
+
+    <footer>
+      <% let year = new Date().getFullYear(); %>
+      <p>I Woof You by Tanya. All rights reserved © <%= year %> </p>
+      </footer>
+</body>
+</html>
